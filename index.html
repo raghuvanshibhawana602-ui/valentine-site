@@ -1,34 +1,165 @@
-12:26:41 AM: build-image version: fbc53cb3bf0a666da624bbd8817fbc7307dd7700 (noble-new-builds)
-12:26:41 AM: buildbot version: 7bbcb2917d4d3a315029a5def09c850276396d6e
-12:26:41 AM: Fetching cached dependencies
-12:26:41 AM: Failed to fetch cache, continuing with build
-12:26:41 AM: Starting to prepare the repo for build
-12:26:41 AM: No cached dependencies found. Cloning fresh repo
-12:26:41 AM: git clone --filter=blob:none https://github.com/raghuvanshibhawana602-ui/valentine-site
-12:26:41 AM: Preparing Git Reference refs/heads/main
-12:26:43 AM: Starting to install dependencies
-12:26:43 AM: mise ~/.config/mise/config.toml tools: python@3.14.3
-12:26:43 AM: mise ~/.config/mise/config.toml tools: ruby@3.4.8
-12:26:43 AM: mise ~/.config/mise/config.toml tools: go@1.26.0
-12:26:43 AM: v22.22.0 is already installed.
-12:26:44 AM: Now using node v22.22.0 (npm v10.9.4)
-12:26:44 AM: Enabling Node.js Corepack
-12:26:44 AM: Successfully installed dependencies
-12:26:44 AM: Detected 0 framework(s)
-12:26:44 AM: No build steps found, continuing to publishing
-12:26:44 AM: Starting to deploy site from '/'
-12:26:44 AM: Calculating files to upload
-12:26:44 AM: 1 new file(s) to upload
-12:26:44 AM: 0 new function(s) to upload
-12:26:44 AM: Section completed: deploying
-12:26:44 AM: Section completed: building
-12:26:45 AM: Post processing - header rules
-12:26:45 AM: Post processing - redirect rules
-12:26:45 AM: Post processing done
-12:26:45 AM: Section completed: postprocessing
-12:26:45 AM: Starting post processing
-12:26:45 AM: Skipping form detection
-12:26:45 AM: Site is live ✨
-12:26:45 AM: Uploading Cache of size 5.3KB
-12:26:45 AM: Section completed: cleanup
-12:26:45 AM: Finished processing build request in 3.636s
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Be My Valentine ❤️</title>
+
+<style>
+body{
+margin:0;
+height:100vh;
+display:flex;
+justify-content:center;
+align-items:center;
+flex-direction:column;
+font-family:'Poppins',sans-serif;
+overflow:hidden;
+background:linear-gradient(-45deg,#ff758c,#ff7eb3,#ffb199,#ff758c);
+background-size:400% 400%;
+animation:bg 10s ease infinite;
+}
+
+@keyframes bg{
+0%{background-position:0% 50%}
+50%{background-position:100% 50%}
+100%{background-position:0% 50%}
+}
+
+h1{
+color:white;
+font-size:3em;
+text-align:center;
+text-shadow:0 0 20px rgba(255,255,255,0.9);
+}
+
+.buttons{
+margin-top:20px;
+}
+
+button{
+padding:15px 35px;
+font-size:20px;
+border:none;
+border-radius:50px;
+margin:10px;
+cursor:pointer;
+transition:.25s;
+}
+
+#yes{
+background:#ff2e63;
+color:white;
+box-shadow:0 0 25px #ff2e63;
+}
+
+#yes:hover{
+transform:scale(1.2);
+}
+
+#no{
+background:white;
+position:absolute;
+}
+
+.heart{
+position:absolute;
+color:#fff;
+animation:float 6s linear infinite;
+}
+
+@keyframes float{
+from{transform:translateY(100vh) scale(.6);opacity:1}
+to{transform:translateY(-10vh) scale(1.4);opacity:0}
+}
+
+.message{
+color:white;
+font-size:22px;
+margin-top:10px;
+height:30px;
+}
+</style>
+</head>
+
+<body>
+
+<h1>Will you be my Valentine? 💖</h1>
+
+<div class="buttons">
+<button id="yes">Yes ❤️</button>
+<button id="no">No 😢</button>
+</div>
+
+<div class="message" id="msg"></div>
+
+<script>
+
+const no = document.getElementById("no");
+const msg = document.getElementById("msg");
+
+const texts = [
+"Are you sure? 🥺",
+"Think again 💭",
+"Pleaseee 😭",
+"Don't break my heart 💔",
+"I'll cry 😿",
+"Last chance 😳"
+];
+
+let i=0;
+
+no.addEventListener("mouseover", ()=>{
+let x = Math.random()*(window.innerWidth-100);
+let y = Math.random()*(window.innerHeight-100);
+no.style.left=x+"px";
+no.style.top=y+"px";
+
+msg.innerText=texts[i%texts.length];
+i++;
+});
+
+document.getElementById("yes").onclick=()=>{
+document.body.innerHTML="<h1 style='color:white;font-size:60px'>YAYYYY 💞🥰💖</h1>";
+confetti();
+};
+
+function confetti(){
+for(let i=0;i<150;i++){
+let c=document.createElement("div");
+c.style.position="absolute";
+c.style.width="10px";
+c.style.height="10px";
+c.style.background=`hsl(${Math.random()*360},100%,50%)`;
+c.style.left=Math.random()*100+"vw";
+c.style.top="-20px";
+c.style.borderRadius="50%";
+c.style.animation="fall 3s linear forwards";
+document.body.appendChild(c);
+}
+}
+
+const style=document.createElement("style");
+style.innerHTML=`
+@keyframes fall{
+to{
+transform:translateY(100vh) rotate(720deg);
+opacity:0;
+}
+}`;
+document.head.appendChild(style);
+
+// floating hearts
+setInterval(()=>{
+let heart=document.createElement("div");
+heart.className="heart";
+heart.innerHTML="❤";
+heart.style.left=Math.random()*100+"vw";
+heart.style.fontSize=(Math.random()*25+15)+"px";
+document.body.appendChild(heart);
+setTimeout(()=>heart.remove(),6000);
+},300);
+
+</script>
+
+</body>
+</html>
